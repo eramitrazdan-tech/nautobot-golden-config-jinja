@@ -1,0 +1,10 @@
+hostname {{ device.name }}
+!
+{% for intf in device.interfaces %}
+interface {{ intf.name }}
+{% if intf.description %} description {{ intf.description }}{% endif %}
+{% if not intf.enabled %} shutdown{% endif %}
+{% for ip in intf.ip_addresses %} ip address {{ ip.address.split('/')[0] }} {{ ip.address }}
+{% endfor %}
+!
+{% endfor %}
